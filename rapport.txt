@@ -1,0 +1,40 @@
+Répartition tâches :
+La répartition est équivalente entre VANDEPOELE Enzo et MICALLEF John. Quant à Léandre LE GRIVES, il n'a ABSOLUMENT PAS participé au projet de quelque manière qu'il soit, malgré de nombreuses relances de notre part (preuves à l'appui si nécessaire).
+
+Fonctionnement algorithmes :
+- TEDM3 :
+	1) logiqueT : logiqueT (pour Tailler) est fragmenté en 3 grandes parties :
+		a) Recherche d'un motif gagnant (normalement pas besoin) :
+		La fonction parcourt le tableau à la recherche d'un motif vertical. S'il est trouvé, la fonction place un pion dans une des deux cases libres pour 		gagner.
+		b) Recherche d'un motif de base :
+		Si aucun motif gagnant n'est trouvé, la fonction cherche un motif vertical sur lequel continuer. S'il est trouvé, elle place un pion de sorte de 		suivre un ordre de 1/2 (ou au milieu suivant l'avancement du motif).
+		c) Si la grille est vide :
+		Si la grille est complètement vide, elle place le pion au milieu de la première ligne.
+
+		Si aucune des conditions précédentes n'est satisfaite :
+		La fonction parcourt la grille à la recherche d'une colonne où elle qui contient 7 cases vertical vides, puis joue en conséquences.
+	2) logiqueE : logiqueE (pour Elaguer) est fragmenté en 2 grandes parties :
+		a) Recherche motig de base :
+		La fonction cherche si certain motif est placé et si le motif peut ammener à la victoire. Si c'est le cas, le fonction placera un pion suivant 			l'avancement du motif.
+		b) Si aucun motif n'est trouvé ou jouable :
+		La fonction va trouver un alignement de 5 pions horizontal vides afin de pouvoir créer un nouveau motif.
+	3) logiqueD : logiqueD (pour Détailler)
+		a) La fonction va placer de façon théorique un pion dans chaque case. Elle va ensuite vérifier si ce pions placé à permis un alignement de nbPions 		alignés (passé en paramètres). Si cette alignement est de 5, cela signifie qu'une victoire est possible avec ce placement. La fonction va alors 		l'annuler, puis récupérer les coordonnées de la première position gagnante dans une liste. Sinon, elle ajoute les coordonnées de la position 			actuelle dans la liste 'listeCoordonnees' et s'appelle récursivement avec un nombre de pions à aligner augmenté de 1 (par exemple si on lui donne 		de base un alignement à vérifier de 4, cela permettra de vérifier s'il est possible de faire un alignement de 5 et donc de gagner).
+	4) checkWin :
+		Cette fonction à une priorité absolue sur les autres. Elle permet dans tous les cas de gagner en 1 coût si la grille le permet. Pour cela elle va 		placer théoriquement un pion sur chaque case puis vérifier si ce pion à permis la victoire.
+	5) jouerRond :
+		Cette fonction permet d'identifier quelle logique utiliser suivant le nombre de pions présent sur la grille.
+Le but de l'algo TED est dans un premier temps de tailler (logiqueT) des colonnes dans la grille puis dans un deuxième temps d'élaguer (logiqueE) les 'branches mortes' qui correspondent aux lignes vides puis dans un dernier temps de détailler (logiqueD) la grille avec quelques pions bien placés au bon endroit pour s'emparer de la victoire.
+
+- Spike :
+	Pour notre IA il faudra distinguer 2 zones une zone appât, et une zone piège, notre IA va essayer d’aligner 4 pions dans la zone appât (ce qui est plutôt 	facile), mais dès qu’elle pourra faire 4 elle jouera dans la zone piège à la place, puis répétera plusieurs fois la supercherie. Pour faire petit à petit 	ce motif :  OO  O 
+	Or les IA à priorités ne bloqueront pas sont coup car généralement elles ne prennent pas en compte ce coup, ou le considère moins dangereux qu’un 	alignement de 4, surtout que les IA de priorités peuvent favoriser les coups avec le plus de O dans une même zone or cette zone est presque vide. A noter 	qu’un humain verrait d'avantage la supercherie qu'une IA.
+
+- bigBrotherM2 :
+	1) logiqueDB : 
+		La fonction va placer de façon théorique un pion dans chaque case. Elle va ensuite vérifier si ce pions placé à permis un alignement de nbPions 		alignés (passé en paramètres). Si cette alignement est de 5, cela signifie qu'une victoire est possible avec ce placement. La fonction va alors 		l'annuler, puis récupérer les coordonnées de la première position gagnante dans une liste pour bloquer ce coût. Sinon, elle ajoute les coordonnées 		de la position actuelle dans la liste 'listeCoordonnees' et s'appelle récursivement avec un nombre de pions à aligner augmenté de 1 (par exemple si 		on lui donne de base un alignement à vérifier de 4, cela permettra de vérifier s'il est possible de faire un alignement de 5 et donc d'empêcher le 		joueur Rond de gagner).
+	2) checkWin :
+		Cette fonction à une priorité absolue sur logiqueDB car elle intervient en cas de crise (à savoir un aligment de 4 pions). Elle permet dans de 			bloquer une possibilités de victoire en 1 coût si la grille le permet. Pour cela elle va placer théoriquement un pion sur chaque case puis vérifier 		si ce pion à permis la victoire.
+	3) jouerRond :
+		Cette fonction permet d'identifier la logique à utiliser pour contre le joueur Rond.
+Le but de l'algo bigBrother est d'essayer de bloquer le joueur Rond en essayant de placer des pions au bon endroit en prévoyant le motif le plus dangereux.

@@ -1,0 +1,4 @@
+Voici le code fourni pour le morpion, vous pouvez simplement modifier la boucle while située dans le main. 
+La taille de la grille est fixée à 15x15 et les ronds doivent aligner 5 pions. Les croix doivent empêcher les ronds de le faire, s'ils y arrivent, ils gagnent. 
+Pas de soutenances, un rapport qui explique en Français vos algorithmes ( compréhensibles par un membre de votre famille qui ne fait pas d'informatique ). Au moins un algo pour Rond, un pour Croix, et un troisième pour le joueur de votre choix. Vous pouvez ajouter d'autres algos si vous avez d'autres idées.  
+Le rapport est à rendre pour le 7 janvier. 
